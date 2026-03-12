@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>STemp - Calculadora</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            padding-top: 30px;
+        }
+
+        .cartao {
+            background-color: white;
+            padding: 25px;
+            width: 380px;
+            border-top: 6px solid #cc0000;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .campo {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #cc0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #caixa_resultado {
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .destaque {
+            color: #cc0000;
+            font-weight: bold;
+        }
+
+        .lucro {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cartao">
+    <h2>STemp</h2>
+    
+    <div class="campo">
+        <label>Peso do Estoque (Kg)</label>
+        <input type="number" id="ipt_peso">
+    </div>
+    <div class="campo">
+        <label>Preço por Kg (R$)</label>
+        <input type="number" id="ipt_preco">
+    </div>
+    <div class="campo">
+        <label>Temperatura Ideal (°C)</label>
+        <input type="number" id="ipt_ideal">
+    </div>
+    <div class="campo">
+        <label>Temperatura Atual (°C)</label>
+        <input type="number" id="ipt_atual">
+    </div>
+    <div class="campo">
+        <label>Tempo de Exposição (Horas)</label>
+        <input type="number" id="ipt_tempo">
+    </div>
+    <div class="campo">
+        <label>Custo do Sistema (R$)</label>
+        <input type="number" id="ipt_sistema">
+    </div>
+
+    <button onclick="calcular()">Analisar</button>
+
+    <div id="caixa_resultado"></div>
+</div>
+
+<script>
+    function calcular() {
+        let peso = Number(ipt_peso.value);
+        let preco = Number(ipt_preco.value);
+        let ideal = Number(ipt_ideal.value);
+        let atual = Number(ipt_atual.value);
+        let tempo = Number(ipt_tempo.value);
+        let sistema = Number(ipt_sistema.value);
+        let desvio = atual - ideal;
+        if (desvio < 0) {
+            desvio = desvio * -1;
+        }
+
+        let taxaPerda = 0;
+        if (desvio <= 2) {
+            taxaPerda = 0.002;
+        } else if (desvio <= 5) {
+            taxaPerda = 0.02;
+        } else {
+            taxaPerda = 0.05;
+        }
+
+        let valorEstoque = peso * preco;
+        let prejuizo = valorEstoque * taxaPerda * tempo;
+        let economiaMensal = (prejuizo * 0.9) / 12;
+        let economiaAnual = economiaMensal * 12;
+        let lucroReal = economiaAnual - sistema;
+        let mesesPayback = sistema / economiaMensal;
+
+
+        caixa_resultado.innerHTML = "Variação: " + desvio + "°C <br>" +
+            "Prejuízo Mensal: <span class='destaque'>R$ " + prejuizo + "</span><br>" +
+            "Economia com STemp: R$ " + economiaAnual + " (ano)<br>" +
+            "Lucro: <span class='lucro'>R$ " + lucroReal + "</span><br>" +
+            "O sistema se paga em: " + mesesPayback + " meses";
+    }
+</script>
+
+</body>
+</html>
