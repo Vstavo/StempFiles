@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calculadora Financeira</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, button { padding: 8px; margin: 5px; }
+    #resultado { font-weight: bold; color: #007BFF; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<h2><span style="color: white;">Calculadora Financeira Simples</span></h2>
+    <div>
+        <input type="number" placeholder="Principal" oninput="P=this.value*1">
+        <input type="number" placeholder="Taxa %" oninput="i=this.value/100">
+        <input type="number" placeholder="Períodos" oninput="n=this.value*1">
+    </div>
+
+    <div>
+        <button onclick="tipo='simples'; calcular()">Juros Simples</button>
+        <button onclick="tipo='montante'; calcular()">Montante</button>
+        <button onclick="tipo='composto'; calcular()">Juros Compostos</button>
+    </div>
+
+    <div id="resultado"></div>
+
+</body>
+<script>
+    let tipo = 'simples';
+    const resultadoDiv = document.getElementById('resultado');
+
+    function calcular() {
+        let res;
+        if (tipo === 'simples') res = P * i * n;
+        else if (tipo === 'montante') res = P * (1 + i * n);
+        else if (tipo === 'composto') res = P * Math.pow(1 + i, n);
+        
+  resultadoDiv.innerHTML = `Resultado: R$ ${res}`;
+}
+</script>
+
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif, color: white;
+        text-align: center;
+        justify-content: center;
+        flex-direction: column;
+        background-color: rgb(53, 0, 127);
+    }
+    input {
+        margin: 10px;
+        padding: 5px;
+        font-size: 16px;
+    }
+    button {
+        margin: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+    </style>
