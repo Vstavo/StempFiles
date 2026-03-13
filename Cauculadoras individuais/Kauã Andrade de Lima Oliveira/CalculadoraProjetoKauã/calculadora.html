@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+body{
+font-family: Arial;
+padding: 30px;
+
+background-image: url("./acougue.avif");
+background-size: cover;
+background-position: center;
+
+background-color: rgba(0,0,0,0.35);
+background-blend-mode: darken;
+}
+
+
+label{
+display:block;
+margin-top:10px;
+color:white;
+font-weight:bold;
+font-size:16px;
+}
+
+input{
+padding:8px;
+margin-top:4px;
+margin-bottom:8px;
+width:250px;
+border-radius:4px;
+border:1px solid #ccc;
+background:rgba(255,255,255,0.9);
+}
+
+button{
+margin-top: 15px;
+padding: 8px 15px;
+background-color: #b4070f;
+color: white;
+border: none;
+cursor: pointer;
+}
+
+button:hover{
+background-color: #a20000;
+}
+
+#div_mensagem{
+margin-top:20px;
+padding:12px;
+background:rgba(255,255,255,0.95);
+border-left:5px solid #b4070f;
+width:300px;
+border-radius:5px;
+
+}
+</style>
+    <label> Média Temperatura (°C)</label>
+    <input id="ipt_temperatura" placeholder="Insira a Temperatura (°C)">
+
+
+
+    <label>Horas Críticas (>5C)</label>
+    <input id="ipt_horas" placeholder="Quantidade de horas que fico acima de 5°C">
+
+
+
+    <label>Valor em Estoque em Reais</label>
+    <input id="ipt_estoque" placeholder="Valor em Estoque em Reais">
+     
+    <label>Preço Serviço </label>
+    <input id="ipt_custo" placeholder="Custo do Serviço">
+
+    <label> Porta </label>
+    <input id="ipt_portas" placeholder="Quantidade de Portas">
+
+
+
+    <button onclick="Calcular()">Calcular</button>
+
+    <div id="div_mensagem"></div>
+
+</body>
+
+</html>
+
+<script>
+
+    function Calcular() {
+        let portas = Number (ipt_portas.value)
+        let temperatura = Number(ipt_temperatura.value)
+        let horas = Number(ipt_horas.value)
+        let estoque = Number(ipt_estoque.value)
+        let custo = Number(ipt_custo.value)
+        let sensor = 1
+        let risco = ""
+        let percentual = 0
+        let portasporsensor = portas * sensor
+
+        if (temperatura > 7) {
+            risco = "Risco Alto"
+            percentual = 0.30
+        } else if (temperatura > 4) {
+            risco = "Risco Moderado"
+            percentual = 0.15
+        } else {
+            risco = "Risco Baixo"
+            percentual = 0.05
+        }
+
+
+        if (horas > 3) {
+            percentual = percentual + 0.10
+        }
+
+        let perda = estoque * percentual
+        let economia = perda * 0.7
+        let payback = custo / (economia / 12)
+
+        let mensagem = ""
+
+        if (payback <= 6) {
+            mensagem = "Investimento muito viável"
+        } else if (payback <= 12) {
+            mensagem = "Investimento médio"
+        } else {
+            mensagem = "Retorno demorado"
+        }
+
+        div_mensagem.innerHTML = `
+    Risco: ${risco}<br>Perda estimada: R$ ${perda}<br>Economia anual: R$ ${economia}<br>Payback: ${payback} meses<br>${mensagem}<br>Quantidade de Sensores ${portasporsensor} `
+    }
+
+
+
+
+
+
+
+
+
+
+</script>
