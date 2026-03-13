@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .caixa {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: rgb(252, 184, 152);
+        padding: 150px;
+        border-radius: 15px;
+
+    }
+</style>
+
+<body>
+
+
+    <div class="container">
+        <div class="caixa">
+            <span>Qual o tamanho da câmara?</span>
+            <input type="text" id="ipt_tamanho"><br>
+            <span>Qual o valor em estoque?</span>
+            <input type="text" id="ipt_valor"><br>
+            <span>Qual o tempo médio fora da temperatura recomendada?</span>
+            <input type="text" id="ipt_tempo"><br>
+            <button onclick="calcular()">Calcular</button>
+            <div id="div_mensagem"></div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
+
+<script>
+
+    let valorRisco = "";
+    function calcular() {
+        let tempo = Number(ipt_tempo.value)
+        let qtd_sensores = Number(ipt_tamanho.value) / 10
+        let valor = Number(ipt_valor.value)
+        let perda = 0;
+        
+        if (tempo < 5) {
+            perda = tempo * valor * 0.001
+        } else {
+            perda = tempo * valor * 0.007
+        }
+        
+        let valorEconomizado = perda * 0.08
+
+
+            div_mensagem.innerHTML = `A quantidade recomendada de sensores vai ser ${qtd_sensores} <br>
+            Valor perdido sem o uso do nosso sistema: ${perda} <br>
+            Valor economizado se usar o nosso sistema: ${valorEconomizado} <br>
+            Risco: ${valorRisco}`
+    }
+</script>
