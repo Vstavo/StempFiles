@@ -91,8 +91,9 @@ Justificativa:
 
 - Redução de zonas não monitoradas
 
-- -Escalabilidade proporcional ao tamanho
+- Escalabilidade proporcional ao tamanho
 
 - Equilíbrio entre custo e cobertura
+
 
 O uso da função de arredondamento para cima garante que nenhuma área fique parcialmente monitorada.
